@@ -16,7 +16,7 @@ public class ShoppingCartTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
 
     // Tato metoda se volá, když se tabulka dotazuje hodnotu v buňce. Tedy pro kažkou buňku.
@@ -25,47 +25,38 @@ public class ShoppingCartTableModel extends AbstractTableModel {
         // Řádek tabulky (rowIndex) odpovídá pozici položky v seznamu položek
         ShoppingCartItem item = shoppingCart.getItems().get(rowIndex);
         // Podle indexu sloupce vracíme atribut položky
-        switch (columnIndex) {
-            case 0:
-                return item.getName();
-            case 1:
-                return item.getPricePerPiece();
-            case 2:
-                return item.getPieces();
-            default:
-                return null;
-        }
+        return switch (columnIndex) {
+            case 0 -> item.getName();
+            case 1 -> item.getPricePerPiece();
+            case 2 -> item.getPieces();
+            case 3 -> item.getTotalPrice();
+            default -> null;
+        };
     }
 
     // Tato metoda se volá, když se tabulka dotazuje na názvy sloupců
     @Override
     public String getColumnName(int columnIndex) {
         // Podle indexu sloupce vracíme název
-        switch (columnIndex) {
-            case 0:
-                return "Název";
-            case 1:
-                return "Cena/kus";
-            case 2:
-                return "Počet kusů";
-            default:
-                return null;
-        }
+        return switch (columnIndex) {
+            case 0 -> "Název";
+            case 1 -> "Cena/kus";
+            case 2 -> "Počet kusů";
+            case 3 -> "Celkova cena";
+            default -> null;
+        };
     }
 
     // Tato metoda se volá, když se tabulka dotazuje "typ" sloupce
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        switch (columnIndex) {
-            case 0:
-                return String.class;
-            case 1:
-                return Double.class;
-            case 2:
-                return Integer.class;
-            default:
-                return null;
-        }
+        return switch (columnIndex) {
+            case 0 -> String.class;
+            case 1 -> Double.class;
+            case 2 -> Integer.class;
+            case 3 -> Double.class;
+            default -> null;
+        };
     }
 
     public void setShoppingCart(ShoppingCart shoppingCart) {

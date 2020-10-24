@@ -4,10 +4,10 @@ import uhk.fim.model.ShoppingCart;
 import uhk.fim.model.ShoppingCartItem;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 
 public class MainFrame extends JFrame implements ActionListener {
     MainFrame mainFrame;
@@ -18,6 +18,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
     ShoppingCart shoppingCart;
     ShoppingCartTableModel model;
+    JLabel lblTotalPrice;
 
     public MainFrame(int width, int height) {
         super("PRO2 - Shopping cart");
@@ -62,7 +63,7 @@ public class MainFrame extends JFrame implements ActionListener {
         table.setModel(model);
         panelTable.add(new JScrollPane(table), BorderLayout.CENTER);
 
-        JLabel lblTotalPrice = new JLabel ("Celkova cena: 0,00 Kc");
+        lblTotalPrice = new JLabel ("Celkova cena: " + shoppingCart.getTotalPrice());
         panelFooter.add(lblTotalPrice, BorderLayout.WEST);
 
         panelMain.add(panelInputs, BorderLayout.NORTH);
@@ -73,13 +74,38 @@ public class MainFrame extends JFrame implements ActionListener {
         add(panelMain);
     }
 
+    private void updateUI() {
+        model.fireTableDataChanged();
+        lblTotalPrice.setText("Celkova cena: " + shoppingCart.getTotalPrice());
+    }
+
+
+    private void runAddToCart(ShoppingCartItem item){
+        shoppingCart.addItem(item);
+        updateUI();
+        JOptionPane.showMessageDialog(mainFrame, "Položka přidána.", "Úspěch", JOptionPane.INFORMATION_MESSAGE);
+    }
+
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource() == btnInputAdd) {
-            ShoppingCartItem item = new ShoppingCartItem(txtInputName.getText(), Double.parseDouble(txtInputPricePerPiece.getText()), (int)spInputPieces.getValue());
-            shoppingCart.addItem(item);
-            model.fireTableDataChanged();
-            JOptionPane.showMessageDialog(mainFrame, "Položka přidána.", "Úspěch", JOptionPane.INFORMATION_MESSAGE);
+
+            String name = txtInputName.getText();
+            String pricePerPiece = txtInputPricePerPiece.getText();
+            int pieces = (int)spInputPieces.getValue();
+
+            boolean isItemValid = pricePerPiece.matches("^[+-]?(\\d*\\.)?\\d+$");
+
+            if(isItemValid) {
+                ShoppingCartItem item = new ShoppingCartItem(name, Double.parseDouble(pricePerPiece), pieces);
+                runAddToCart(item);
+            } else {
+                JOptionPane.showMessageDialog(mainFrame, "Musite zadat cislo", "Error", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+
         }
     }
+
+
 }
