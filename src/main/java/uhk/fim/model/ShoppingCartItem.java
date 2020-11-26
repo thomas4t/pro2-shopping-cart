@@ -4,7 +4,6 @@ public class ShoppingCartItem {
     private String name;
     private double pricePerPiece;
     private int pieces;
-    private double totalPrice;
 
     public ShoppingCartItem(String name, double pricePerPiece, int pieces) {
         this.name = name;
@@ -15,8 +14,6 @@ public class ShoppingCartItem {
     public String getName() {
         return name;
     }
-
-
     public void setName(String name) {
         this.name = name;
     }
@@ -24,7 +21,6 @@ public class ShoppingCartItem {
     public double getPricePerPiece() {
         return pricePerPiece;
     }
-
     public void setPricePerPiece(double pricePerPiece) {
         this.pricePerPiece = pricePerPiece;
     }
@@ -32,17 +28,12 @@ public class ShoppingCartItem {
     public int getPieces() {
         return pieces;
     }
-
     public void setPieces(int pieces) {
         this.pieces = pieces;
     }
 
     public double getTotalPrice() {
-        totalPrice = pricePerPiece * pieces;
-        return totalPrice;
+        return pricePerPiece * pieces;
     }
 
-    public void setTotalPrice(int totalPrice) {
-        this.totalPrice = totalPrice;
-    }
 }

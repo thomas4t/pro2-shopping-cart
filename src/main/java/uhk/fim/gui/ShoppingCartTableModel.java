@@ -3,6 +3,7 @@ package uhk.fim.gui;
 import uhk.fim.model.ShoppingCart;
 import uhk.fim.model.ShoppingCartItem;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
 public class ShoppingCartTableModel extends AbstractTableModel {
@@ -52,9 +53,9 @@ public class ShoppingCartTableModel extends AbstractTableModel {
     public Class<?> getColumnClass(int columnIndex) {
         return switch (columnIndex) {
             case 0 -> String.class;
-            case 1 -> Double.class;
+            case 1, 3 -> Double.class;
             case 2 -> Integer.class;
-            case 3 -> Double.class;
+            case 4 -> JRadioButtonMenuItem.class;
             default -> null;
         };
     }

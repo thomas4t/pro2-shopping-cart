@@ -1,1 +1,1 @@
-Tomáš Trávníček
+Autor: Tomáš Trávníček @ 2020

@@ -14,6 +14,10 @@ public class ShoppingCart {
         return items;
     }
 
+    public void setItems(List<ShoppingCartItem> items) {
+        this.items = items;
+    }
+
     public void addItem(ShoppingCartItem item){
         // Check if item already exists
         String addName = item.getName();
@@ -41,4 +45,9 @@ public class ShoppingCart {
         }
         return sum;
     }
+
+    public void clear(){
+        items.clear();
+    }
+
 }
